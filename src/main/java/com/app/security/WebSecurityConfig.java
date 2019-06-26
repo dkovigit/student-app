@@ -61,8 +61,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/swagger-resources/**")//
         .antMatchers("/swagger-ui.html")//
         .antMatchers("/configuration/**")//
-        .antMatchers("/webjars/**")//
-        .antMatchers("/public")
+        .antMatchers("/search")
+        .antMatchers("/progress")
         
         .and()
         .ignoring()
