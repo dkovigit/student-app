@@ -35,8 +35,8 @@ public class ProgressReportController {
 	  @ApiResponses(value = {//
 	      @ApiResponse(code = 400, message = "Something went wrong"), 
 	      @ApiResponse(code = 422, message = "Invalid GET Request submitted")})
-	  public void search(@PathVariable("id")  Integer id) {	
-		  progressService.getReport(id);
+	  public ProgressReportDTO search(@PathVariable("id")  Integer id) {	
+		  return progressService.getReport(id);
 	  }
 
 
