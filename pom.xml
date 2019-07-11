@@ -12,6 +12,7 @@
 	<artifactId>student-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>student-app</name>
+	<packaging>war</packaging>
 	<description>Student Training Reports</description>
 
 	<properties>
