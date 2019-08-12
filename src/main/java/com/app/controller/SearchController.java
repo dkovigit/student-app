@@ -24,8 +24,9 @@ public class SearchController {
   @ApiResponses(value = {//
       @ApiResponse(code = 400, message = "Something went wrong"), 
       @ApiResponse(code = 422, message = "Invalid Request submitted")})
-  public void search(@RequestBody  SearchDTO searchRequest) {	
-    searchService.saveSearch(searchRequest);
+  public SearchResponseDTO search(@RequestBody  SearchDTO searchRequest) {	
+    //searchService.saveSearch(searchRequest);
+    return searchService.performSearch(searchRequest);
   }
 
 
