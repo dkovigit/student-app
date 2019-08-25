@@ -37,25 +37,28 @@ public class UserService {
 
   public String signin(String username, String password) {
     try {
-      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-      //return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
-      return jwtTokenProvider.createToken(username, Arrays.asList(Role.ROLE_CLIENT));
+    	User modelUser = userRepository.findByUsername(username);
+    	if(modelUser != null) {
+    	//	return "user exists";
+    	} else {
+    		throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+    	}
+    	
+      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(modelUser.getUsername(), modelUser.getPassword(), modelUser.getRoles()));
+      return jwtTokenProvider.createToken(username, modelUser.getRoles());
     } catch (AuthenticationException e) {
       throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
     }
   }
 
-  public String signup(User user) {	  
+  public String signup(User user) {
     if (!userRepository.existsByUsername(user.getUsername())) {
-      //user.setPassword(passwordEncoder.encode(user.getPassword()));
-      user.setPassword(user.getPassword());
-     
+      user.setPassword(passwordEncoder.encode(user.getPassword()));
+      user.setRoles(Arrays.asList(Role.ROLE_ADMIN));
       userRepository.save(user);
-      //return jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
-      return jwtTokenProvider.createToken(user.getUsername(), Arrays.asList(Role.ROLE_CLIENT));
+      return jwtTokenProvider.createToken(user.getUsername(), Arrays.asList(Role.ROLE_ADMIN));
     } else {
-      //throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
-    	return jwtTokenProvider.createToken(user.getUsername(), Arrays.asList(Role.ROLE_CLIENT));
+      throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
     }
   }
 
@@ -76,8 +79,7 @@ public class UserService {
   }
 
   public String refresh(String username) {
-    //return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
-    return jwtTokenProvider.createToken(username, , Arrays.asList(Role.ROLE_CLIENT));
+    return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
   }
 
 }
