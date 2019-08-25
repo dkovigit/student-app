@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.SearchDTO;
+import com.app.dto.SearchResponseDTO;
 import com.app.service.SearchService;
 
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +16,6 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 public class SearchController {
-
   @Autowired
   private SearchService searchService;
   
@@ -24,12 +24,10 @@ public class SearchController {
   @ApiResponses(value = {//
       @ApiResponse(code = 400, message = "Something went wrong"), 
       @ApiResponse(code = 422, message = "Invalid Request submitted")})
-  public SearchResponseDTO search(@RequestBody  SearchDTO searchRequest) {	
-    //searchService.saveSearch(searchRequest);
+  public SearchResponseDTO search(@RequestBody  SearchDTO searchRequest) {	   
     return searchService.performSearch(searchRequest);
   }
 
 
 
 }
-
