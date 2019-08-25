@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.app.dto.UserDataDTO;
 import com.app.dto.UserResponseDTO;
 import com.app.model.User;
@@ -24,8 +25,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import springfox.documentation.swagger2.mappers.ModelMapper;
-
+//import springfox.documentation.swagger2.mappers.ModelMapper;
+import org.modelmapper.ModelMapper;
 
 @RestController
 @RequestMapping("/users")
@@ -44,9 +45,10 @@ public class UserController {
       @ApiResponse(code = 400, message = "Something went wrong"), //
       @ApiResponse(code = 422, message = "Invalid username/password supplied")})
   public String login(//
-      @ApiParam("Username") @RequestParam String username, //
-      @ApiParam("Password") @RequestParam String password) {
-    return userService.signin(username, password);
+    //  @ApiParam("Username") @RequestParam String username, //
+    //  @ApiParam("Password") @RequestParam String password) {
+		  @ApiParam("Signup User") @RequestBody UserDataDTO user) {
+    return userService.signin(user.getUsername(), user.getPassword());
   }
 
   @PostMapping("/signup")
@@ -58,6 +60,8 @@ public class UserController {
       @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
   public String signup(@ApiParam("Signup User") @RequestBody UserDataDTO user) {
     return userService.signup(modelMapper.map(user, User.class));
+	  
+    //return userService.signup(BeanUtils.copyProperties(user, User.class));
   }
 
   @DeleteMapping(value = "/{username}")
