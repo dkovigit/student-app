@@ -1,5 +1,8 @@
 package com.app.dto;
 
+//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchDTO {
   
   private Integer userId;
@@ -86,3 +89,4 @@ public Integer getUserId(){
   }
 
 }
+
